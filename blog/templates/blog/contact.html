@@ -4,17 +4,25 @@
     <div class="container-fluid ">
         <div class="d-flex justify-content-center mt-5">
             <div class="d-flex gap-3 flex-column">
+<!--                {% for field in form %}-->
+<!--                {% if field.errors %}-->
+<!--                        <div class="'col-12" ><span class="fw-bold">{{field.label_tag}}</span>-->
+<!--                        {% for error in field.errors %}-->
+<!--                        <span class="text-danger">{{error}}</span>-->
+<!--                        {% endfor %}</div>-->
+<!--                {% endif %}-->
+<!--                {% endfor %}-->
                 <h3>Contact Form</h3>
                 <form method="post" class="row g-3">
                     {% csrf_token %}
                 <div class="col-md-6">
                     {{ form.name.label_tag }}
                    {{ form.name }}
-                      {% if form.name.errors %}
+                    {% if form.name.errors %}
                          {% for error in form.name.errors %}
                                     {{error}}
-                         {% endfor %}
-                      {% endif %}
+                    {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="col-md-6">
                      {{ form.email.label_tag }}
