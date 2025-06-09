@@ -2,9 +2,12 @@ from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from django.views import View
 from django.urls import reverse_lazy
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,FormView,UpdateView,DeleteView
+from django.views.generic.base import TemplateView
 from .models import Post
 from django.http import HttpResponseNotFound
+from .forms import Contactform
+from django.urls import reverse_lazy
 # Create your views here.
 class index(ListView):
     model=Post
@@ -48,3 +51,20 @@ def new_url_view(request,id):
     return HttpResponse(f'This is the new URL {id}')
 
 
+class Contact(FormView):
+    form_class = Contactform
+    template_name = 'blog/contact.html'
+    success_url = reverse_lazy('blog:thanks')
+
+    def form_valid(self, form):
+        name=form.cleaned_data['name']
+        print(name)
+        email=form.cleaned_data['email']
+        print(email)
+        message=form.cleaned_data['message']
+        print(message)
+        return super().form_valid(form)
+
+
+class Thanks(TemplateView):
+    template_name = 'blog/thanks.html'
