@@ -16,7 +16,7 @@ class Post(models.Model):
     img_url=models.URLField(null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     slug=models.SlugField(unique=True,null=True,blank=True)
-    # category_name=models.ForeignKey(Category,on_delete=models.CASCADE)
+    category_name=models.ForeignKey(Category,on_delete=models.CASCADE)
 
 
     def save(self,*args,**kwargs):
