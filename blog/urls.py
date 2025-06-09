@@ -12,5 +12,4 @@ urlpatterns=[
     path('old_url/<int:id>',views.old_url_redirect,name='old_url'),
     path('contact/',views.Contact.as_view(),name='contact'),
     path('thanks/',views.Thanks.as_view(),name='thanks'),
-
 ]
