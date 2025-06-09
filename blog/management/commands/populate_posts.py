@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from blog.models import Post
+from blog.models import Post,Category
 import random
 
 
@@ -82,8 +82,11 @@ class Command(BaseCommand):
 
         Post.objects.all().delete()
 
+        categories=Category.objects.all()
+
         for title,content,img_url in zip(titles,contents,img_urls):
-            Post.objects.create(title=title,content=content,img_url=img_url)
+            category=random.choice(categories)
+            Post.objects.create(title=title,content=content,img_url=img_url,category=category)
 
 
         self.stdout.write(self.style.SUCCESS('Completed inserting data!'))

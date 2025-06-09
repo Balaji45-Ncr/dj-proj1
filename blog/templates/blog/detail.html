@@ -14,9 +14,9 @@
                 <div class="card-body">
                   <h5 class="card-title">Related Posts</h5>
                   <ul class="list-unstyled">
-                    <li><a href="./detail.html">Post 1</a></li>
-                    <li><a href="./detail.html">Post 2</a></li>
-                    <li><a href="./detail.html">Post 3</a></li>
+                      {% for i in related_posts %}
+                    <li><a href="{% url 'blog:detail' pk=i.id %}">{{i.title}}</a></li>
+                      {% endfor %}
                   </ul>
                 </div>
               </div>

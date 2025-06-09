@@ -29,7 +29,7 @@
                                 <p class="card-text">{{post.content|truncatewords:9}}</p>
                                 <div class="d-flex justify-content-between">
                                      <a href="{% url 'blog:detail' pk=post.id %}">Read More</a>
-                                    <a class="text-decoration-none text-dark fw-bold" href="#">Sports</a>
+                                    <a class="text-decoration-none text-dark fw-bold" href="#">{{post.category.name}}</a>
                                 </div>
                             </div>
                         </div>
