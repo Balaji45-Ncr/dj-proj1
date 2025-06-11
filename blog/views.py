@@ -13,7 +13,7 @@ class index(ListView):
     model=Post
     template_name='blog/index.html'
     context_object_name = 'Latest'
-    paginate_by = 3
+    paginate_by = 6
 
 
 
