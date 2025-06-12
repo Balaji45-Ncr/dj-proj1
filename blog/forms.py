@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
 
 class Contactform(forms.Form):
     name= forms.CharField(label='Name',max_length=50,required=True)
@@ -8,20 +9,43 @@ class Contactform(forms.Form):
     message= forms.CharField(label='Message',required=True)
 
 class Registerform(forms.ModelForm):
-    username=forms.CharField(label='Username',max_length=100,required=True)
-    email=forms.EmailField(label='Email',max_length=100,required=True)
-    password=forms.CharField(label='Password',max_length=100,required=True)
-    password_confirm=forms.CharField(label='Confirm_Password',max_length=100,required=True)
+    username = forms.CharField(label='Username', max_length=100, required=True)
+    email = forms.EmailField(label='Email', max_length=100, required=True)
+    password = forms.CharField(label='Password', max_length=100, required=True, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(label='Confirm Password', max_length=100, required=True, widget=forms.PasswordInput)
 
     class Meta:
-        model=User
-        fields=['username','email']
+        model = User
+        fields = ['username', 'email','password']
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Username already exists")
+        return username
 
     def clean(self):
-        data=super().clean()
-        password=data.get('password')
-        cnfm_pwd=data.get('password_confirm')
+        data = super().clean()
+        password = data.get('password')
+        confirm = data.get('password_confirm')
+        if password and confirm and password != confirm:
+            raise forms.ValidationError('Password and confirm password did not match')
+        return data
 
-        if password and cnfm_pwd and password!=cnfm_pwd:
-            raise forms.ValidationError('Password and confirm_password did not match')
+
+class Loginform(forms.Form):
+    username=forms.CharField(label="Username",max_length=100,required=True)
+    password=forms.CharField(label='Password',max_length=50,required=True)
+
+    # def clean(self):
+    #     cleaned_data=super().clean()
+    #     username=cleaned_data.get('username')
+    #     password=cleaned_data.get('password')
+    #
+    #     if username and password:
+    #         user=authenticate(username=username,password=password)
+    #         if user is None:
+    #             raise forms.ValidationError('No user with this creds')
+
+
+

@@ -6,9 +6,9 @@ from django.views.generic import ListView,DetailView,FormView,UpdateView,DeleteV
 from django.views.generic.base import TemplateView
 from .models import Post
 from django.http import HttpResponseNotFound
-from .forms import Contactform,Registerform
+from .forms import Contactform,Registerform,Loginform
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 # Create your views here.
 class index(ListView):
@@ -86,6 +86,7 @@ class Register(FormView):
         password=form.cleaned_data['password']
         form_details.set_password(password)
         form_details.save()
+
         messages.success(self.request,'your registration was sucessfully done please login')
         return super().form_valid(form)
 
@@ -93,4 +94,20 @@ class Register(FormView):
         return super().form_invalid(form)
 
 class Login(FormView):
-    pass
+    form_class = Loginform
+    template_name = 'blog/login.html'
+    success_url = reverse_lazy('blog:index')
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password= form.cleaned_data.get('password')
+        user=authenticate(self.request,username=username,password=password)
+        if user:
+            login(self.request,user)
+            messages.success(self.request,'login was successfull')
+            return super().form_valid(form)
+        else:
+            form.add_error(None, "Invalid username or password")
+            return form.invalid(form)
+
+        #return super().form_valid(form)
