@@ -5,7 +5,12 @@
 
 
     <div class="container-fluid">
-
+    {% if messages %}
+        {% for message in messages %}
+        <span class="text-success">
+            {{message}}</span>
+        {% endfor %}
+        {% endif %}
 
                 <div class="my-3">
                     <form method="post">

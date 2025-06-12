@@ -75,7 +75,7 @@ class Thanks(TemplateView):
 class Register(FormView):
     form_class = Registerform
     template_name = 'blog/register.html'
-    success_url = reverse_lazy('blog:thanks')
+    success_url = reverse_lazy('blog:login')
 
     def form_valid(self, form):
         form_details=form.save(commit=False)
@@ -96,7 +96,7 @@ class Register(FormView):
 class Login(FormView):
     form_class = Loginform
     template_name = 'blog/login.html'
-    success_url = reverse_lazy('blog:index')
+    success_url = reverse_lazy('blog:dashboard')
 
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
@@ -106,8 +106,24 @@ class Login(FormView):
             login(self.request,user)
             messages.success(self.request,'login was successfull')
             return super().form_valid(form)
-        else:
-            form.add_error(None, "Invalid username or password")
-            return form.invalid(form)
+
 
         #return super().form_valid(form)
+
+class Dashboard(TemplateView):
+    template_name = 'blog/dashboard.html'
+
+
+    def get_context_data(self, **kwargs):
+        context=super(Dashboard, self).get_context_data()
+        context['blog_title']='My Posts'
+        return context
+
+class Logout(View):
+    def get(self,request):
+        return render(request,'blog/logout.html')
+
+    def post(self,request):
+            logout(request)
+            messages.success(request,'Logged Out Successfully')
+            return redirect('/blog/login')

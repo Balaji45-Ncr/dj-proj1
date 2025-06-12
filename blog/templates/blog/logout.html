@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+
+<form method="post">
+    {% csrf_token %}
+    <p>Please click on logout button </p>
+
+    <input type="submit">
+
+</form>
+
+
+
+
+{% endblock %}
