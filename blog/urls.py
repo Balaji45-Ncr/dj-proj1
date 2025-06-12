@@ -12,4 +12,6 @@ urlpatterns=[
     path('old_url/<int:id>',views.old_url_redirect,name='old_url'),
     path('contact/',views.Contact.as_view(),name='contact'),
     path('thanks/',views.Thanks.as_view(),name='thanks'),
+    path('register/',views.Register.as_view(),name='register'),
+    path('login/',views.Login.as_view(),name='login'),
 ]

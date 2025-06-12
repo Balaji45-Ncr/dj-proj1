@@ -2,12 +2,14 @@ from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from django.views import View
 from django.urls import reverse_lazy
-from django.views.generic import ListView,DetailView,FormView,UpdateView,DeleteView
+from django.views.generic import ListView,DetailView,FormView,UpdateView,DeleteView,CreateView
 from django.views.generic.base import TemplateView
 from .models import Post
 from django.http import HttpResponseNotFound
-from .forms import Contactform
+from .forms import Contactform,Registerform
 from django.urls import reverse_lazy
+from django.contrib.auth import authenticate
+from django.contrib import messages
 # Create your views here.
 class index(ListView):
     model=Post
@@ -68,3 +70,27 @@ class Contact(FormView):
 
 class Thanks(TemplateView):
     template_name = 'blog/thanks.html'
+
+
+class Register(FormView):
+    form_class = Registerform
+    template_name = 'blog/register.html'
+    success_url = reverse_lazy('blog:thanks')
+
+    def form_valid(self, form):
+        form_details=form.save(commit=False)
+        user=form.cleaned_data['username']
+        print(user)
+        email=form.cleaned_data['email']
+        print(email)
+        password=form.cleaned_data['password']
+        form_details.set_password(password)
+        form_details.save()
+        messages.success(self.request,'your registration was sucessfully done please login')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
+class Login(FormView):
+    pass
