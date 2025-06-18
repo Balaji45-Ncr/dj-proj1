@@ -146,8 +146,9 @@ class New_Post(CreateView):
     success_url = reverse_lazy('blog:dashboard')
 
     def form_valid(self, form):
+        post=form.save(commit=False)
         user=self.request.user
-        form.instance.user=user
+        post.instance.user=user
         return super().form_valid(form)
 
 

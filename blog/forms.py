@@ -54,7 +54,7 @@ class Newpost(forms.ModelForm):
     content=forms.CharField(label='Content')
     class Meta:
         model=Post
-        fields = ['title','content','category']
+        fields = ['title','content','category','img_url']
 
     def save(self, commit=...):
 
@@ -62,6 +62,5 @@ class Newpost(forms.ModelForm):
         post.img_url='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png'
 
         if commit:
-            post.save(
-            )
+            post.save()
         return post
