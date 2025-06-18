@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
-
+from .models import Post
 class Contactform(forms.Form):
     name= forms.CharField(label='Name',max_length=50,required=True)
     email= forms.EmailField(label='Email')
@@ -49,3 +49,19 @@ class Loginform(forms.Form):
 
 
 
+class Newpost(forms.ModelForm):
+    title=forms.CharField(label='Title',max_length=25)
+    content=forms.CharField(label='Content')
+    class Meta:
+        model=Post
+        fields = ['title','content','category']
+
+    def save(self, commit=...):
+
+        post=super().save(commit)
+        post.img_url='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png'
+
+        if commit:
+            post.save(
+            )
+        return post

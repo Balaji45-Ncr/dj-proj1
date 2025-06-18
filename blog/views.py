@@ -6,7 +6,7 @@ from django.views.generic import ListView,DetailView,FormView,UpdateView,DeleteV
 from django.views.generic.base import TemplateView
 from .models import Post
 from django.http import HttpResponseNotFound
-from .forms import Contactform,Registerform,Loginform
+from .forms import Contactform,Registerform,Loginform,Newpost
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -138,3 +138,16 @@ class Logout(View):
             logout(request)
             messages.success(request,'Logged Out Successfully')
             return redirect(reverse('blog:login'))
+
+class New_Post(CreateView):
+    model=Post
+    form_class = Newpost
+    template_name = 'blog/new_post.html'
+    success_url = reverse_lazy('blog:dashboard')
+
+    def form_valid(self, form):
+        user=self.request.user
+        form.instance.user=user
+        return super().form_valid(form)
+
+
