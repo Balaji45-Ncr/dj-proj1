@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 # Create your models here.
 
-
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name=models.CharField(max_length=50)
@@ -17,6 +17,8 @@ class Post(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     slug=models.SlugField(unique=True,null=True,blank=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
 
 
     def save(self,*args,**kwargs):

@@ -113,8 +113,16 @@ class Login(FormView):
 
         #return super().form_valid(form)
 
-class Dashboard(TemplateView):
+class Dashboard(ListView):
+    model = Post
     template_name = 'blog/dashboard.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        querydata=super().get_queryset()
+        return querydata.filter(user=self.request.user)
+
+
 
 
     def get_context_data(self, **kwargs):

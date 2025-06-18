@@ -34,19 +34,21 @@
           </div>
         </div>
         <div class="row m-3">
+            {% for i in object_list %}
             <div class="col-4 mb-4">
+
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <img style="height:300; width:300;" src="https://placehold.co/600x400" class="img-fluid" alt="...">
+                                <img style="height:300; width:300;" src="{{i.img_url}}" class="img-fluid" alt="...">
                             </div>
                             <div class="col-md-8">
-                                <h5 class="card-title">[POST TITLE]</h5>
-                                <p class="card-text">[POST CONTENT]</p>
+                                <h5 class="card-title">{{i.title}}</h5>
+                                <p class="card-text">{{i.content}}</p>
                                 <div class="d-flex justify-content-between">
-                                    <a href="[POST DETAIL URL]">Read More</a>
-                                    <a class="text-decoration-none text-dark fw-bold" href="#">[CATEGORY NAME]</a>
+                                    <a href="{% url 'blog:detail' pk=i.id %}">Read More</a>
+                                    <a class="text-decoration-none text-dark fw-bold" href="#">{{i.content.name}}</a>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +56,37 @@
                           <a class="btn btn-info btn-sm text-light" href="[EDIT POST URL]">Edit Post</a>
                           <a class="btn btn-danger btn-sm text-light" href="[DELETE POST URL]">Delete Post</a>
                           <a class="btn btn-success btn-sm text-light" href="[PUBLISH POST URL]">Publish Post</a>
-                          <label class="text-danger">Not Published</label>
+                          <label class="text-sucess">Published</label>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
+{% endfor %}
         </div>
       </div>
+       <div class="pagination">
+  <span>
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; First</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+  </span>
+
+  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+  <span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+        </div>
+        <div class="row">
+
+        </div>
+
+    </div>
 
 {% endblock %}
