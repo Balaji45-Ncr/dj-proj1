@@ -106,6 +106,9 @@ class Login(FormView):
             login(self.request,user)
             messages.success(self.request,'login was successfull')
             return super().form_valid(form)
+        else:
+            form.add_error(None,'Invalid Username or Password')
+            return self.form_invalid(form)
 
 
         #return super().form_valid(form)
@@ -126,4 +129,4 @@ class Logout(View):
     def post(self,request):
             logout(request)
             messages.success(request,'Logged Out Successfully')
-            return redirect('/blog/login')
+            return redirect(reverse('blog:login'))

@@ -1,6 +1,12 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-
+  <div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+        <span class="text-success">
+            {{message}}</span>
+        {% endfor %}
+        {% endif %}
     <div class="container-fluid ">
         <div class="row">
           <div class="col-6">
