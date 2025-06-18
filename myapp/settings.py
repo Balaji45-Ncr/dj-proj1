@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'myapp.middleware.RedirectAuthenticatedUserMiddleware',
+    'myapp.middleware.RedirectUnAuthenticatedUserMiddleware',
 
 ]
 
