@@ -10,6 +10,8 @@ from .forms import Contactform,Registerform,Loginform,Newpost
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 class index(ListView):
     model=Post
@@ -151,7 +153,7 @@ class Logout(View):
             messages.success(request,'Logged Out Successfully')
             return redirect(reverse('blog:login'))
 
-class New_Post(CreateView):
+class New_Post(LoginRequiredMixin,CreateView):
     model=Post
     form_class = Newpost
     template_name = 'blog/new_post.html'
