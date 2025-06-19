@@ -158,3 +158,7 @@ class Edit_Post(UpdateView):
     template_name = 'blog/update.html'
     success_url = reverse_lazy('blog:dashboard')
     context_object_name = 'post'
+class Delete_Post(DeleteView):
+    model = Post
+    template_name = 'blog/delete.html'
+    success_url = reverse_lazy('blog:dashboard')
