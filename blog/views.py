@@ -148,7 +148,7 @@ class New_Post(CreateView):
     def form_valid(self, form):
         post=form.save(commit=False)
         user=self.request.user
-        post.instance.user=user
+        form.instance.user=user
         return super().form_valid(form)
 
 

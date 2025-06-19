@@ -59,7 +59,8 @@ class Newpost(forms.ModelForm):
     def save(self, commit=...):
 
         post=super().save(commit)
-        post.img_url='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png'
+        if not post.img_url:
+            post.img_url='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png'
 
         if commit:
             post.save()
