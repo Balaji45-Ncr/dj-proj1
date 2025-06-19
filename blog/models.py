@@ -13,11 +13,12 @@ class Category(models.Model):
 class Post(models.Model):
     title=models.CharField(max_length=150)
     content=models.TextField()
-    img_url=models.ImageField(null=True,blank=True,upload_to='posts/images')
+    img_url=models.ImageField(null=True,blank=True,upload_to='posts/images',max_length=500)
     created_at=models.DateTimeField(auto_now_add=True)
     slug=models.SlugField(unique=True,null=True,blank=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    is_published=models.BooleanField(default=False)
 
 
 
