@@ -152,3 +152,9 @@ class New_Post(CreateView):
         return super().form_valid(form)
 
 
+class Edit_Post(UpdateView):
+    model=Post
+    fields=['title', 'content', 'img_url','category']
+    template_name = 'blog/update.html'
+    success_url = reverse_lazy('blog:dashboard')
+    context_object_name = 'post'

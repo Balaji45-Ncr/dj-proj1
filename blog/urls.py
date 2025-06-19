@@ -17,5 +17,6 @@ urlpatterns=[
     path('dashboard/',views.Dashboard.as_view(),name='dashboard'),
     path('logout/',views.Logout.as_view(),name='logout'),
     path('new_post/',views.New_Post.as_view(),name='new_post'),
+    path('edit_post/<int:pk>',views.Edit_Post.as_view(),name='edit_post'),
 
 ]
