@@ -44,15 +44,20 @@
                                 <p class="card-text">{{i.content}}</p>
                                 <div class="d-flex justify-content-between">
                                     <a href="{% url 'blog:detail' pk=i.id %}">Read More</a>
-                                    <a class="text-decoration-none text-dark fw-bold" href="#">{{i.content.name}}</a>
+                                    <a class="text-decoration-none text-dark fw-bold" href="#">{{i.category.name}}</a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                           <a class="btn btn-info btn-sm text-light" href="{% url 'blog:edit_post' pk=i.id %}">Edit Post</a>
                           <a class="btn btn-danger btn-sm text-light" href="{% url 'blog:delete_post' pk=i.id %}">Delete Post</a>
-                          <a class="btn btn-success btn-sm text-light" href="[PUBLISH POST URL]">Publish Post</a>
-                          <label class="text-sucess">Published</label>
+                            {% if not i.is_published %}
+                          <a class="btn btn-success btn-sm text-light" href="{% url 'blog:publish_post' pk=i.id %}">Publish Post</a>
+                            {% endif %}
+                            {% if i.is_published %}
+                          <label class="text-success">Published</label>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

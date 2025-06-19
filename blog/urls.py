@@ -19,5 +19,6 @@ urlpatterns=[
     path('new_post/',views.New_Post.as_view(),name='new_post'),
     path('edit_post/<int:pk>/',views.Edit_Post.as_view(),name='edit_post'),
     path('delete_post/<int:pk>/',views.Delete_Post.as_view(),name='delete_post'),
+    path('publish_post/<int:pk>/',views.Publish.as_view(),name='publish_post'),
 
 ]

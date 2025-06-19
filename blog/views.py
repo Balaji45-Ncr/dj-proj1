@@ -14,8 +14,20 @@ from django.contrib import messages
 class index(ListView):
     model=Post
     template_name='blog/index.html'
-    context_object_name = 'Latest'
     paginate_by = 6
+
+    def get_queryset(self):
+        posting=super().get_queryset()
+        data=posting.filter(is_published=True)
+        return data
+
+class Publish(View):
+    def get(self,request,*args,**kwargs):
+        id=self.kwargs.get('pk')
+        post=Post.objects.get(pk=id)
+        post.is_published=True
+        post.save()
+        return redirect(reverse('blog:dashboard'))
 
 
 
